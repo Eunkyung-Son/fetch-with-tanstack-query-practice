@@ -2,12 +2,7 @@ import { todosApi } from "@/apis/Todos/Todos.api";
 import { QUERY_KEY_BANNER_API } from "@/apis/Todos/Todos.query";
 import TodoList from "@/components/TodoList";
 import HydratedTodos from "@/components/hydratedTodoList";
-// import HydratedTodos from "@/components/hydratedTodoList";
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { Suspense } from "react";
 
 export default async function Home() {

@@ -1,5 +1,5 @@
-import queryClientOptions from "@/configs/tanstack-query/query-client-options";
 import { QueryClient } from "@tanstack/react-query";
+import queryClientOptions from "@/configs/tanstack-query/query-client-options";
 
 function makeQueryClient() {
   return new QueryClient(queryClientOptions);
