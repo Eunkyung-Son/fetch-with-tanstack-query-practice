@@ -3,7 +3,6 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { use } from "react";
 import { QUERY_KEY_BANNER_API } from "@/apis/Todos/Todos.query";
 import { todosApi } from "@/apis/Todos/Todos.api";
 import TodoList2 from "./TodoList2";
@@ -13,7 +12,12 @@ export default async function HydratedTodos() {
 
   await queryClient.prefetchQuery({
     queryKey: QUERY_KEY_BANNER_API.LIST(),
-    queryFn: () => todosApi.todosList(),
+    queryFn: () =>
+      todosApi.todosList({
+        params: {
+          cache: "no-store",
+        },
+      }),
   });
 
   return (

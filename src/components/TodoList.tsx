@@ -1,14 +1,28 @@
 "use client";
 
+import revalidate from "@/actions/revalidate";
 import { TodosType } from "@/apis/@types/data-contracts";
-import { useTodosListQuery } from "@/apis/Todos/Todos.query";
+import {
+  QUERY_KEY_BANNER_API,
+  useTodosListQuery,
+} from "@/apis/Todos/Todos.query";
+import { useQueryClient } from "@tanstack/react-query";
+import { revalidateTag } from "next/cache";
 import { use } from "react";
 
 interface TodoListProps {
   todosPromise: Promise<TodosType[]>;
 }
 const TodoList = ({ todosPromise }: TodoListProps) => {
+  const queryClient = useQueryClient();
   const todos = use(todosPromise);
+
+  const handleClick = () => {
+    revalidate();
+    queryClient.invalidateQueries({
+      queryKey: QUERY_KEY_BANNER_API.LIST(),
+    });
+  };
 
   return (
     <div
@@ -20,6 +34,7 @@ const TodoList = ({ todosPromise }: TodoListProps) => {
         flexDirection: "column",
       }}
     >
+      <button onClick={handleClick}>revalidate</button>
       {todos?.map(({ userId, title, completed }) => (
         <div
           key={`${userId}-${title}`}

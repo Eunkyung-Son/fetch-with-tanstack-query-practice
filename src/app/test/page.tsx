@@ -17,12 +17,9 @@ export default async function Home() {
         },
       }),
   });
-
-  console.log("income");
-
   return (
     <main className="flex min-h-screen flex-row items-center justify-between p-24">
-      <Link href="/test">test</Link>
+      <Link href="/">home</Link>
 
       {/* <Suspense fallback={"loading...."}>
         <TodoList
