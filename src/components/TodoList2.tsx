@@ -5,7 +5,8 @@ import { useTodosListQuery } from "@/apis/Todos/Todos.query";
 const TodoList2 = () => {
   const { data: todos } = useTodosListQuery({
     options: {
-      staleTime: 1000 * 10,
+      staleTime: 1000 * 5,
+      suspense: true,
     },
   });
 

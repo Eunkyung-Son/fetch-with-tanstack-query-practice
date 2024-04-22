@@ -1,7 +1,8 @@
 import {
+  UseBaseQueryOptions,
   UseInfiniteQueryOptions,
   UseMutationOptions,
-  UseQueryOptions,
+  UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 
 export type QueryHookParams<
@@ -12,7 +13,7 @@ export type QueryHookParams<
   Variables = Parameter<T>
 > = {
   options?: Omit<
-    UseQueryOptions<OriginData, Error, TData>,
+    UseBaseQueryOptions<OriginData, Error, TData>,
     "queryKey" | "queryFn"
   >;
 } & OptionalVariables<Variables>;

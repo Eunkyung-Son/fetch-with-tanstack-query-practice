@@ -11,7 +11,7 @@ import { todosApi } from "./Todos.api";
 /**
  * QUERY_KEYS
  */
-export const QUERY_KEY_BANNER_API = {
+export const QUERY_KEY_TODOS_API = {
   LIST: (variables?: Parameter<typeof todosApi.todosList>) =>
     ["TODOS_LIST", variables].filter((key) => typeof key !== "undefined"),
   RETRIEVE: (variables?: Parameter<typeof todosApi.todosRetrieve>) =>
@@ -32,7 +32,7 @@ export const useTodosListQuery = <
 >(
   params?: QueryHookParams<typeof todosApi.todosList, CommonErrorType, TData>
 ) => {
-  const queryKey = QUERY_KEY_BANNER_API.LIST(params?.variables);
+  const queryKey = QUERY_KEY_TODOS_API.LIST(params?.variables);
   return useQuery({
     queryKey,
     queryFn: () => todosApi.todosList(params?.variables).then((res) => res),
@@ -54,7 +54,7 @@ export const useTodosRetrieveQuery = <
 >(
   params: QueryHookParams<typeof todosApi.todosRetrieve, CommonErrorType, TData>
 ) => {
-  const queryKey = QUERY_KEY_BANNER_API.RETRIEVE(params.variables);
+  const queryKey = QUERY_KEY_TODOS_API.RETRIEVE(params.variables);
   return useQuery({
     queryKey,
     queryFn: () => todosApi.todosRetrieve(params.variables),

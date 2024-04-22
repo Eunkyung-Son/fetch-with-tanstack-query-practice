@@ -3,7 +3,7 @@
 import revalidate from "@/actions/revalidate";
 import { TodosType } from "@/apis/@types/data-contracts";
 import {
-  QUERY_KEY_BANNER_API,
+  QUERY_KEY_TODOS_API,
   useTodosListQuery,
 } from "@/apis/Todos/Todos.query";
 import { useQueryClient } from "@tanstack/react-query";
@@ -20,7 +20,7 @@ const TodoList = ({ todosPromise }: TodoListProps) => {
   const handleClick = () => {
     revalidate();
     queryClient.invalidateQueries({
-      queryKey: QUERY_KEY_BANNER_API.LIST(),
+      queryKey: QUERY_KEY_TODOS_API.LIST(),
     });
   };
 
