@@ -1,15 +1,15 @@
 "use client";
 
 import revalidate from "@/actions/revalidate";
-import { TodoType } from "@/apis/@types/data-contracts";
+import { PhotoType, TodoType } from "@/apis/@types/data-contracts";
 import { QUERY_KEY_PHOTO_API } from "@/apis/Photo/Photo.query";
 import { useQueryClient } from "@tanstack/react-query";
 import { use } from "react";
 
-interface TodoListProps {
-  photosPromise: Promise<TodoType[]>;
+interface PhotoListProps {
+  photosPromise: Promise<PhotoType[]>;
 }
-const PhotoList = ({ photosPromise }: TodoListProps) => {
+const PhotoList = ({ photosPromise }: PhotoListProps) => {
   const queryClient = useQueryClient();
   const photos = use(photosPromise);
 
@@ -24,24 +24,22 @@ const PhotoList = ({ photosPromise }: TodoListProps) => {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center,",
         border: "1px solid white",
         flexDirection: "column",
       }}
     >
       <button onClick={handleClick}>revalidate</button>
-      {photos?.map(({ userId, title, completed }) => (
+      {photos?.map(({ id, albumId, title, url }) => (
         <div
-          key={`${userId}-${title}`}
+          key={id}
           style={{
             display: "flex",
             gap: "10px",
           }}
         >
-          <p>{userId}</p>
+          <p>{albumId}</p>
           <p>{title}</p>
-          <p>{completed}</p>
+          <p>{url}</p>
         </div>
       ))}
     </div>

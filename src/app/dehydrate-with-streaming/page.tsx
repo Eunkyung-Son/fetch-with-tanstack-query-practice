@@ -3,24 +3,12 @@ import HydratedTodoList from "@/components/Todo/hydratedTodoList";
 import Link from "next/link";
 import { Suspense } from "react";
 
-export default async function Home() {
+export default async function DehydrateWithStreaming() {
   return (
     <main className="flex min-h-screen flex-row p-24">
       <h1>tanstack-query dehydrate & fetch & streaming</h1>
       <Link href="/">go to home</Link>
       <section className="flex min-h-screen flex-row p-24">
-        {/* <Suspense fallback={"loading...."}>
-        <TodoList
-          todosPromise={todosApi.todosList({
-            params: {
-              cache: "force-cache",
-              next: {
-                tags: ["todos"],
-              },
-            },
-          })}
-        />
-      </Suspense> */}
         <Suspense fallback={"todo loading!!!"}>
           {/* @ts-expect-error Async Server Component */}
           <HydratedTodoList />

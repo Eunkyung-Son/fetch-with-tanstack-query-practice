@@ -1,7 +1,4 @@
-import HydratedPhotoList from "@/components/Photo/hydratedPhotoList";
-import HydratedTodoList from "@/components/Todo/hydratedTodoList";
 import Link from "next/link";
-import { Suspense } from "react";
 
 export default async function Home() {
   return (
@@ -11,16 +8,8 @@ export default async function Home() {
         go to dehydrate-with-steaming
       </Link>
       <Link href="/fetch-with-streaming">go to fetch-with-streaming</Link>
-      <section className="flex min-h-screen flex-row p-24">
-        <Suspense fallback={"todo loading!!!"}>
-          {/* @ts-expect-error Async Server Component */}
-          <HydratedTodoList />
-        </Suspense>
-        <Suspense fallback={"photo loading!!!"}>
-          {/* @ts-expect-error Async Server Component */}
-          <HydratedPhotoList />
-        </Suspense>
-      </section>
+      <Link href="/client-tanstack-query">go to client-tanstack-query</Link>
+      <Link href="/client-tanstack-query-2">go to client-tanstack-query-2</Link>
     </main>
   );
 }

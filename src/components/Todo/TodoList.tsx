@@ -24,8 +24,6 @@ const TodoList = ({ todosPromise }: TodoListProps) => {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center,",
         border: "1px solid white",
         flexDirection: "column",
       }}
