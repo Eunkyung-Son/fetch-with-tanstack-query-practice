@@ -3,26 +3,26 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { QUERY_KEY_TODOS_API } from "@/apis/Todos/Todos.query";
-import { todosApi } from "@/apis/Todos/Todos.api";
-import TodoList2 from "./TodoList2";
+import PhotoList2 from "./PhotoList2";
+import { QUERY_KEY_PHOTO_API } from "@/apis/Photo/Photo.query";
+import { photoApi } from "@/apis/Photo/Photo.api";
 
-export default async function HydratedTodos() {
+export default async function HydratedPhotoList() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: QUERY_KEY_TODOS_API.LIST(),
+    queryKey: QUERY_KEY_PHOTO_API.LIST(),
     queryFn: () =>
-      todosApi.todosList({
+      photoApi.photoList({
         params: {
-          cache: "no-store",
+          cache: "force-cache",
         },
       }),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <TodoList2 />
+      <PhotoList2 />
     </HydrationBoundary>
   );
 }

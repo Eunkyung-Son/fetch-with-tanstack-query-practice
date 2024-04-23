@@ -1,22 +1,21 @@
 import { fetchInstance } from "@/configs/fetch/fetch-instance";
 import { HttpClient, RequestParams } from "../@http-client";
-import { CommonErrorType, TodosType } from "../@types/data-contracts";
-import { ENV } from "@/configs/env";
+import { CommonErrorType, TodoType } from "../@types/data-contracts";
 
-export class TodosApi<
+export class TodoApi<
   SecurityDataType = unknown
 > extends HttpClient<SecurityDataType> {
   /**
    * No description
    *
-   * @tags banner
-   * @name BannerList
+   * @tags todos
+   * @name TodoType
    * @summary Banner 목록 조회
    * @request GET:/todos
    * @secure
    */
-  todosList = (variables?: { query?: {}; params?: RequestParams }) =>
-    this.request<TodosType[], CommonErrorType>({
+  todoList = (variables?: { query?: {}; params?: RequestParams }) =>
+    this.request<TodoType[], CommonErrorType>({
       path: `/todos`,
       method: "GET",
       query: variables?.query,
@@ -28,14 +27,14 @@ export class TodosApi<
   /**
    * No description
    *
-   * @tags banner
-   * @name BannerRetrieve
-   * @summary Banner 상세 조회
-   * @request GET:/todos/{id}
+   * @tags todo
+   * @name TodoRetrieve
+   * @summary todo 상세 조회
+   * @request GET:/todo/{id}
    * @secure
    */
-  todosRetrieve = (variables: { id: number; params?: RequestParams }) =>
-    this.request<TodosType, CommonErrorType>({
+  todoRetrieve = (variables: { id: number; params?: RequestParams }) =>
+    this.request<TodoType, CommonErrorType>({
       path: `/todos/${variables.id}`,
       method: "GET",
       secure: true,
@@ -44,7 +43,7 @@ export class TodosApi<
     });
 }
 
-export const todosApi = new TodosApi({
+export const todoApi = new TodoApi({
   customFetch: fetchInstance,
 });
 

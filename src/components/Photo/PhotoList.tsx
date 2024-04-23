@@ -1,26 +1,22 @@
 "use client";
 
 import revalidate from "@/actions/revalidate";
-import { TodosType } from "@/apis/@types/data-contracts";
-import {
-  QUERY_KEY_TODOS_API,
-  useTodosListQuery,
-} from "@/apis/Todos/Todos.query";
+import { TodoType } from "@/apis/@types/data-contracts";
+import { QUERY_KEY_PHOTO_API } from "@/apis/Photo/Photo.query";
 import { useQueryClient } from "@tanstack/react-query";
-import { revalidateTag } from "next/cache";
 import { use } from "react";
 
 interface TodoListProps {
-  todosPromise: Promise<TodosType[]>;
+  photosPromise: Promise<TodoType[]>;
 }
-const TodoList = ({ todosPromise }: TodoListProps) => {
+const PhotoList = ({ photosPromise }: TodoListProps) => {
   const queryClient = useQueryClient();
-  const todos = use(todosPromise);
+  const photos = use(photosPromise);
 
   const handleClick = () => {
     revalidate();
     queryClient.invalidateQueries({
-      queryKey: QUERY_KEY_TODOS_API.LIST(),
+      queryKey: QUERY_KEY_PHOTO_API.LIST(),
     });
   };
 
@@ -35,7 +31,7 @@ const TodoList = ({ todosPromise }: TodoListProps) => {
       }}
     >
       <button onClick={handleClick}>revalidate</button>
-      {todos?.map(({ userId, title, completed }) => (
+      {photos?.map(({ userId, title, completed }) => (
         <div
           key={`${userId}-${title}`}
           style={{
@@ -52,4 +48,4 @@ const TodoList = ({ todosPromise }: TodoListProps) => {
   );
 };
 
-export default TodoList;
+export default PhotoList;

@@ -1,5 +1,4 @@
-import TodoList2 from "@/components/TodoList2";
-
+import TodoList2 from "@/components/Todo/TodoList2";
 import Link from "next/link";
 import { Suspense } from "react";
 

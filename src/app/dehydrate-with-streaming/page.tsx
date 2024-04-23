@@ -5,13 +5,22 @@ import { Suspense } from "react";
 
 export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col p-24">
-      <h1>Various examples</h1>
-      <Link href="/dehydrate-with-streaming">
-        go to dehydrate-with-steaming
-      </Link>
-      <Link href="/fetch-with-streaming">go to fetch-with-streaming</Link>
+    <main className="flex min-h-screen flex-row p-24">
+      <h1>tanstack-query dehydrate & fetch & streaming</h1>
+      <Link href="/">go to home</Link>
       <section className="flex min-h-screen flex-row p-24">
+        {/* <Suspense fallback={"loading...."}>
+        <TodoList
+          todosPromise={todosApi.todosList({
+            params: {
+              cache: "force-cache",
+              next: {
+                tags: ["todos"],
+              },
+            },
+          })}
+        />
+      </Suspense> */}
         <Suspense fallback={"todo loading!!!"}>
           {/* @ts-expect-error Async Server Component */}
           <HydratedTodoList />

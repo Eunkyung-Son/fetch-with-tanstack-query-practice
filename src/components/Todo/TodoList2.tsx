@@ -1,9 +1,9 @@
 "use client";
 
-import { useTodosListQuery } from "@/apis/Todos/Todos.query";
+import { useTodoListQuery } from "@/apis/Todo/Todo.query";
 
 const TodoList2 = () => {
-  const { data: todos } = useTodosListQuery({
+  const { data: todos } = useTodoListQuery({
     options: {
       staleTime: 1000 * 5,
       suspense: true,
@@ -14,9 +14,7 @@ const TodoList2 = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center,",
-        border: "1px solid white",
+        border: "1px solid yellow",
         flexDirection: "column",
       }}
     >
