@@ -1,7 +1,7 @@
+import ParentA from "@/components/ParentA";
 import HydratedPhotoList from "@/components/Photo/hydratedPhotoList";
 import { RenderingPageSkeleton } from "@/components/RenderingPageSkeleton";
 import { SkeletonCard } from "@/components/SkeletonCard";
-import HydratedTodoList from "@/components/Todo/hydratedTodoList";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -12,11 +12,9 @@ export default async function DehydrateWithStreaming() {
       <Link href="/">go to home</Link>
       <section className="flex min-h-screen flex-row p-24">
         <Suspense fallback={<SkeletonCard />}>
-          {/* @ts-expect-error Async Server Component */}
-          <HydratedTodoList />
+          <ParentA />
         </Suspense>
         <Suspense fallback={<RenderingPageSkeleton />}>
-          {/* @ts-expect-error Async Server Component */}
           <HydratedPhotoList />
         </Suspense>
       </section>
