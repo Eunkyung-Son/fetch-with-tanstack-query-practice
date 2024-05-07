@@ -3,9 +3,9 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import PhotoList2 from "./PhotoList2";
 import { QUERY_KEY_PHOTO_API } from "@/apis/Photo/Photo.query";
 import { photoApi } from "@/apis/Photo/Photo.api";
+import PhotoList from "./PhotoList";
 
 export default async function HydratedPhotoList() {
   const queryClient = new QueryClient();
@@ -22,7 +22,7 @@ export default async function HydratedPhotoList() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PhotoList2 />
+      <PhotoList />
     </HydrationBoundary>
   );
 }

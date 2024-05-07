@@ -45,7 +45,7 @@ export const useTodoListQuery = <
  *
  * @tags todos
  * @name TodosRetrieve
- * @summary Banner 상세 조회
+ * @summary Todos 상세 조회
  * @request GET:/todos/{id}
  * @secure */
 

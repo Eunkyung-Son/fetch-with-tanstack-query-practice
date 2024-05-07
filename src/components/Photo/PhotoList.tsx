@@ -1,17 +1,28 @@
 "use client";
 
 import revalidate from "@/actions/revalidate";
-import { PhotoType, TodoType } from "@/apis/@types/data-contracts";
-import { QUERY_KEY_PHOTO_API } from "@/apis/Photo/Photo.query";
+import { PhotoType } from "@/apis/@types/data-contracts";
+import {
+  QUERY_KEY_PHOTO_API,
+  usePhotoListQuery,
+} from "@/apis/Photo/Photo.query";
 import { useQueryClient } from "@tanstack/react-query";
 import { use } from "react";
 
 interface PhotoListProps {
-  photosPromise: Promise<PhotoType[]>;
+  photosPromise?: Promise<PhotoType[]>;
 }
 const PhotoList = ({ photosPromise }: PhotoListProps) => {
   const queryClient = useQueryClient();
-  const photos = use(photosPromise);
+  const photos = photosPromise && use(photosPromise);
+
+  const { data: photoList } = usePhotoListQuery({
+    options: {
+      staleTime: 1000 * 5,
+      suspense: true,
+      initialData: photos,
+    },
+  });
 
   const handleClick = () => {
     revalidate();
@@ -29,7 +40,7 @@ const PhotoList = ({ photosPromise }: PhotoListProps) => {
       }}
     >
       <button onClick={handleClick}>revalidate</button>
-      {photos?.map(({ id, albumId, title, url }) => (
+      {photoList?.map(({ id, albumId, title, url }) => (
         <div
           key={id}
           style={{

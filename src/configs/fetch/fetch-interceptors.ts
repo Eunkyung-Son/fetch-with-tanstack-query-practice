@@ -34,8 +34,8 @@ export const returnFetchInterceptors: FetchHelper = (args) =>
         }
         if (typeof window !== "undefined" && isExpiredToken) {
           const [url, requestInit] = requestArgs;
-          const refresh = await getCookie("refresh").then((v) => v?.value);
           const access = await getCookie("access").then((v) => v?.value);
+          const refresh = await getCookie("refresh").then((v) => v?.value);
           const tryRefresh = await fetch(
             `${ENV.API_BASE_URL}/v1/user/refresh/`,
             {

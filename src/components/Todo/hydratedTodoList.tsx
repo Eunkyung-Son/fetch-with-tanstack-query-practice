@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { QUERY_KEY_TODO_API } from "@/apis/Todo/Todo.query";
 import { todoApi } from "@/apis/Todo/Todo.api";
-import TodoList2 from "./TodoList2";
+import TodoList from "./TodoList";
 
 export default async function HydratedTodoList() {
   const queryClient = new QueryClient();
@@ -22,7 +22,7 @@ export default async function HydratedTodoList() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <TodoList2 />
+      <TodoList />
     </HydrationBoundary>
   );
 }

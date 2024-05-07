@@ -2,18 +2,25 @@
 
 import revalidate from "@/actions/revalidate";
 import { TodoType } from "@/apis/@types/data-contracts";
-import { QUERY_KEY_TODO_API } from "@/apis/Todo/Todo.query";
+import { QUERY_KEY_TODO_API, useTodoListQuery } from "@/apis/Todo/Todo.query";
 import { useQueryClient } from "@tanstack/react-query";
 import { use } from "react";
 
 interface TodoListProps {
-  todosPromise: Promise<TodoType[]>;
+  todosPromise?: Promise<TodoType[]>;
 }
 const TodoList = ({ todosPromise }: TodoListProps) => {
   const queryClient = useQueryClient();
-  const todos = use(todosPromise);
+  const todos = todosPromise && use(todosPromise);
 
-  const handleClick = () => {
+  const { data: todoList } = useTodoListQuery({
+    options: {
+      suspense: true,
+      initialData: todos,
+    },
+  });
+
+  const handleRevalidate = () => {
     revalidate();
     queryClient.invalidateQueries({
       queryKey: QUERY_KEY_TODO_API.LIST(),
@@ -28,8 +35,8 @@ const TodoList = ({ todosPromise }: TodoListProps) => {
         flexDirection: "column",
       }}
     >
-      <button onClick={handleClick}>revalidate</button>
-      {todos?.map(({ userId, title, completed }) => (
+      <button onClick={handleRevalidate}>revalidate</button>
+      {todoList?.map(({ userId, title, completed }) => (
         <div
           key={`${userId}-${title}`}
           style={{
