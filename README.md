@@ -14,7 +14,7 @@
   API를 관리자에서 갱신 시켜 준다면? query `staleTime 0` fetch `force-cache + tags`
   관리자에서 갱신 시켜주지 않는다면? fetch `revalidate` query `staleTime` 동기화
 
-
+##
 Next.js 에서 데이터 페칭 시 고민한 문제들에 대해서 이야기 해보겠습니다.
 
 App Router를 사용하면서 기존에 사용하던 tanstack-query를 제거하고 오직 fetch 만을 사용하여 데이터 캐시 관리를 했습니다.
