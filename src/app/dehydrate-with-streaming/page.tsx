@@ -1,11 +1,11 @@
 import ParentA from "@/components/ParentA";
-import HydratedPhotoList from "@/components/Photo/hydratedPhotoList";
+import HydratedPhotoList from "@/components/Photo/HydratedPhotoList";
 import { RenderingPageSkeleton } from "@/components/RenderingPageSkeleton";
 import { SkeletonCard } from "@/components/SkeletonCard";
 import Link from "next/link";
 import { Suspense } from "react";
 
-export default async function DehydrateWithStreaming() {
+export default async function DehydrateWithStreamingPage() {
   return (
     <main className="flex min-h-screen h-full flex-row p-24">
       <h1>tanstack-query dehydrate & fetch & streaming</h1>

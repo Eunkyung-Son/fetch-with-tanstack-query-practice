@@ -1,15 +1,30 @@
 import { photoApi } from "@/apis/Photo/Photo.api";
 import { todoApi } from "@/apis/Todo/Todo.api";
+import ClientButton from "@/components/ClientButton";
 import PhotoList from "@/components/Photo/PhotoList";
 import TodoList from "@/components/Todo/TodoList";
 import Link from "next/link";
 import { Suspense } from "react";
 
-export default async function FetchWithStreaming() {
+export default async function FetchWithStreamingPage() {
   return (
     <main className="flex min-h-screen flex-col p-24">
       <h1>fetch with streaming</h1>
       <Link href="/">go to home</Link>
+      <ClientButton>
+        <Suspense fallback={"todo loading!!!"}>
+          <TodoList
+            todosPromise={todoApi.todoList({
+              params: {
+                cache: "force-cache",
+                next: {
+                  tags: ["TODO_LIST"],
+                },
+              },
+            })}
+          />
+        </Suspense>
+      </ClientButton>
       <section className="flex min-h-screen flex-row p-24">
         <Suspense fallback={"todo loading!!!"}>
           <TodoList
@@ -17,7 +32,7 @@ export default async function FetchWithStreaming() {
               params: {
                 cache: "force-cache",
                 next: {
-                  tags: ["todo"],
+                  tags: ["TODO_LIST"],
                 },
               },
             })}
@@ -29,7 +44,7 @@ export default async function FetchWithStreaming() {
               params: {
                 cache: "force-cache",
                 next: {
-                  tags: ["photo"],
+                  tags: ["PHOTO_LIST"],
                 },
               },
             })}

@@ -1,4 +1,4 @@
-import HydratedTodoList from "./Todo/hydratedTodoList";
+import HydratedTodoList from "./Todo/HydratedTodoList";
 
 export default function ParentC() {
   return <HydratedTodoList />;
