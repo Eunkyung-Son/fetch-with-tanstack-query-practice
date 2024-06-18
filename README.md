@@ -316,7 +316,7 @@ export default function ParentC() {
 
 그렇다면 좀 더 좋은 방법이 있을까요?
 
-## 2-1. 서버와 클라이언트 컴포넌트 인터리빙 하기
+## 2-2. 서버와 클라이언트 컴포넌트 인터리빙 하기
 
 ```jsx
 "use client";
