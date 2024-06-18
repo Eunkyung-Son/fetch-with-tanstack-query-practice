@@ -1,21 +1,3 @@
-## fetch with tanstack-query strategy
-
-- Case 1 - Authorization 를 포함한 `GET` 요청
-
-  - fetch cache option `no-store` + tanstack-query `staleTime` 설정 및 Client-Side에서 `useQuery` 사용을 권장합니다.
-
-- Case 2 - mutate 요청
-
-  - fetch cache option `no-store` + Client-Side에서 `useMutate` 사용을 권장합니다.
-
-- Case 3 - props drilling 깊은 컴포넌트
-
-  - Server & Client Component의 InterLeaving 을 권장합니다.
-  - tanstack-query `Dehydrate`
-    - 해당 방식은 사용 가능하지만, 보일러 플레이트 코드가 길어지고, 별도의 캐시 관리가 필요하므로 권장하지 않습니다.
-
-##
-
 Next.js 에서 데이터 페칭 시 고민한 문제들에 대해서 이야기 해보겠습니다.
 
 App Router를 사용하면서 기존에 사용하던 tanstack-query를 제거하고 오직 fetch 만을 사용하여 데이터 캐시 관리를 했습니다.
@@ -385,3 +367,17 @@ export default async function ComponentInterLeavingPage() {
   );
 }
 ```
+
+
+# 결론
+
+여러가지 시행착오를 겪은 후 fetch 와 tanstack-query를 Win-Win 하면서 사용하는 방법은 아래와 같습니다.
+
+- Case 1 - Authorization 를 포함한 `GET` 요청
+    - fetch cache option `no-store` + tanstack-query `staleTime` 설정 및 Client-Side에서 `useQuery` 사용을 권장합니다.
+- Case 2 - mutate 요청
+    - fetch cache option `no-store` + Client-Side에서 `useMutate` 사용을 권장합니다.
+- Case 3 - props drilling 깊은 컴포넌트
+    - Server & Client Component의 InterLeaving 을 권장합니다.
+    - tanstack-query `Dehydrate`
+        - 해당 방식은 사용 가능하지만, 보일러 플레이트 코드가 길어지고, 별도의 캐시 관리가 필요하므로 권장하지 않습니다.
