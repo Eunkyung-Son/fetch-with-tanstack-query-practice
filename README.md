@@ -1,15 +1,21 @@
 ## fetch with tanstack-query strategy
 
-- Authorization 요청
-  - fetch `no-store` query `staleTime` 설정
+- Case 1 - Authorization 를 포함한 `GET` 요청
 
-- mutate 요청
+  - fetch cache option `no-store` + tanstack-query `staleTime` 설정 및 Client-Side에서 `useQuery` 사용을 권장합니다.
 
-- props drilling 깊은 컴포넌트
-  - API를 관리자에서 갱신 시켜 준다면? query `staleTime 0` fetch `force-cache + tags`
-  - 관리자에서 갱신 시켜주지 않는다면? fetch `revalidate` query `staleTime` 동기화
+- Case 2 - mutate 요청
+
+  - fetch cache option `no-store` + Client-Side에서 `useMutate` 사용을 권장합니다.
+
+- Case 3 - props drilling 깊은 컴포넌트
+
+  - Server & Client Component의 InterLeaving 을 권장합니다.
+  - tanstack-query `Dehydrate`
+    - 해당 방식은 사용 가능하지만, 보일러 플레이트 코드가 길어지고, 별도의 캐시 관리가 필요하므로 권장하지 않습니다.
 
 ##
+
 Next.js 에서 데이터 페칭 시 고민한 문제들에 대해서 이야기 해보겠습니다.
 
 App Router를 사용하면서 기존에 사용하던 tanstack-query를 제거하고 오직 fetch 만을 사용하여 데이터 캐시 관리를 했습니다.
@@ -18,7 +24,6 @@ App Router를 사용하면서 기존에 사용하던 tanstack-query를 제거하
 2. tanstack-query 공식 문서에서 아래의 권장사항을 발견했습니다.
 
 > It's hard to give general advice on when it makes sense to pair React Query with Server Components and not. **If you are just starting out with a new Server Components app, we suggest you start out with any tools for data fetching your framework provides you with and avoid bringing in React Query until you actually need it.** This might be never, and that's fine, use the right tool for the job!
-> 
 
 🤔 위와 같은 이유로 라이브러리 도움 없이 fetch 를 사용하다가 다음과 같은 고민이 생겼습니다.
 
@@ -27,10 +32,10 @@ App Router를 사용하면서 기존에 사용하던 tanstack-query를 제거하
 - 이전 글에서 언급한 대로, 개인화된 요청은 원격 서버에 캐싱 되어서는 안 됩니다. 따라서 fetch 할 때 no-store 옵션을 사용합니다. 그러나 no-store로 요청하면 데이터가 캐싱 되지 않으므로, 새로고침 및 라우트 캐시가 만료될 때 마다 API 호출이 발생합니다. 이런 경우, client-side에서 tanstack-query를 사용하여 브라우저 메모리에 개인화된 요청에 대한 응답을 캐시 하고 queryKey와 staleTime으로 캐시를 관리합니다.
 - 개인화 되지 않은 요청은 server-side에서 force-cache 옵션을 사용하여 API를 호출하고, 적절한 방법을 통해 갱신합니다.
 
-|  | 개인화 되지 않은 요청 | 개인화 된 요청 |
-| --- | --- | --- |
-| server-side | fetch | x |
-| client-side | x | tanstack-query |
+|             | 개인화 되지 않은 요청 | 개인화 된 요청 |
+| ----------- | --------------------- | -------------- |
+| server-side | fetch                 | x              |
+| client-side | x                     | tanstack-query |
 
 1번 고민에 대한 결과를 정리하면, 개인화 된 요청은 검색 엔진에 노출될 필요가 없으므로 client-side 에서 tanstack-query로 요청 후 캐시를 관리합니다. Suspense의 fallback 을 이용하여 유저에게 데이터를 가져오는 중임을 알립니다. 그 반대의 경우 server-side에서 fetch 하고 원격 서버에 캐싱하므로 유저에게 빠르게 데이터를 보여줄 수 있습니다. 두 가지 방법을 적절히 섞어 사용하면 API 호출 비용을 줄이고, 유저에게 빠르게 데이터를 보여줄 수 있습니다.
 
@@ -44,7 +49,7 @@ props drilling 방식으로 데이터를 전달하면 상위 컴포넌트가 변
 
 ## 개발환경
 
-*(next14.2.2, react18^, typescript^5.1.3, tanstack-query^5.29.2)*
+_(next14.2.2, react18^, typescript^5.1.3, tanstack-query^5.29.2)_
 
 ## 초기 설정
 
@@ -60,7 +65,6 @@ const queryClientOptions = {
 };
 
 export default queryClientOptions;
-
 ```
 
 ```jsx
@@ -85,7 +89,6 @@ export default function getQueryClient() {
     return browserQueryClient;
   }
 }
-
 ```
 
 ```jsx
@@ -107,7 +110,6 @@ function AppProvider({ children }: PropsWithChildren) {
 }
 
 export default AppProvider;
-
 ```
 
 ## Prefetch + de/hydrating data
@@ -145,7 +147,6 @@ export default async function HydratedTodoList() {
     </HydrationBoundary>
   );
 }
-
 ```
 
 ```jsx
@@ -163,7 +164,7 @@ interface TodoListProps {
 export default function TodoList({ todosPromise }: TodoListProps) {
   const queryClient = useQueryClient();
   const todos = todosPromise && use(todosPromise);
-	
+
   // This useQuery could just as well happen in some deeper
   // child to <TodoList>, data will be available immediately either way
   const { data: todoList } = useTodoListQuery({
@@ -192,7 +193,7 @@ export default function TodoList({ todosPromise }: TodoListProps) {
       ))}
     </div>
   );
-};
+}
 ```
 
 ```jsx
@@ -210,11 +211,11 @@ export default async function DehydrateWithStreaming() {
       <Link href="/">go to home</Link>
       <section className="flex min-h-screen flex-row p-24">
         <Suspense fallback={<SkeletonCard />}>
-	        // props drilling이 발생할 컴포넌트
+          // props drilling이 발생할 컴포넌트
           <ParentA />
         </Suspense>
         <Suspense fallback={<RenderingPageSkeleton />}>
-	        // 실제로 사용되는 곳과 가까운 위치에서 prefetch 할 수 있습니다.
+          // 실제로 사용되는 곳과 가까운 위치에서 prefetch 할 수 있습니다.
           <HydratedPhotoList />
         </Suspense>
       </section>
