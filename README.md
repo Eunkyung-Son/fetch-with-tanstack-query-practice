@@ -378,6 +378,6 @@ export default async function ComponentInterLeavingPage() {
 - Case 2 - mutate 요청
     - fetch cache option `no-store` + Client-Side에서 `useMutate` 사용을 권장합니다.
 - Case 3 - props drilling 깊은 컴포넌트
-    - Server & Client Component의 InterLeaving 을 권장합니다.
+    - 서버와 클라이언트 컴포넌트의 인터리빙을 권장합니다.
     - tanstack-query `Dehydrate`
         - 해당 방식은 사용 가능하지만, 보일러 플레이트 코드가 길어지고, 별도의 캐시 관리가 필요하므로 권장하지 않습니다.
