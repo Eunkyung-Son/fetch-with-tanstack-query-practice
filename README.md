@@ -12,7 +12,7 @@ App Router를 사용하면서 기존에 사용하던 tanstack-query를 제거하
 
 # **1. API 호출 비용을 최대한 줄이면서 유저에게 빠르게 데이터를 보여줄 수 있는 방법이 있을까?**
 
-- 이전 글에서 언급한 대로, 개인화된 요청은 원격 서버에 캐싱 되어서는 안 됩니다. 따라서 fetch 할 때 no-store 옵션을 사용합니다. 그러나 no-store로 요청하면 데이터가 캐싱 되지 않으므로, 새로고침 및 라우트 캐시가 만료될 때 마다 API 호출이 발생합니다. 이런 경우, client-side에서 tanstack-query를 사용하여 브라우저 메모리에 개인화된 요청에 대한 응답을 캐시 하고 queryKey와 staleTime으로 캐시를 관리합니다.
+- 이전 글에서 언급한 대로, 개인화된 요청은 원격 서버에 캐싱 되어서는 안 됩니다. 따라서 fetch를 사용할 때 `no-store` 옵션을 설정합니다. 이 경우, 새로고침 및 라우트 캐시가 만료될 때 마다 API 호출이 발생하므로 client-side에서 tanstack-query를 사용하여 브라우저 메모리에 개인화된 요청에 대한 응답을 캐시 하고 queryKey와 staleTime으로 캐시를 관리합니다.
 - 개인화 되지 않은 요청은 server-side에서 force-cache 옵션을 사용하여 API를 호출하고, 적절한 방법을 통해 갱신합니다.
 
 |  | 개인화 되지 않은 요청 | 개인화 된 요청 |
@@ -378,7 +378,7 @@ export default async function ComponentInterLeavingPage() {
 - Case 2 - Authorization 을 포함하지 않는 `GET` 요청
     - fetch 를 독립적으로 사용하는 것을 권장합니다.
 - Case 3 - mutate 요청
-    - fetch cache option `no-store` + Client-Side에서 `useMutate` 사용을 권장합니다.
+    - fetch cache option `no-store` + Client-Side에서 `useMutation` 사용을 권장합니다.
 - Case 4 - props drilling 깊은 컴포넌트
     - 서버와 클라이언트 컴포넌트의 InterLeaving 을 권장합니다.
     - tanstack-query `Dehydrate`
