@@ -20,7 +20,7 @@ App Router를 사용하면서 기존에 사용하던 tanstack-query를 제거하
 | server-side | fetch | x |
 | client-side | x | tanstack-query |
 
-1번 고민에 대한 결과를 정리하면, 개인화 된 요청은 검색 엔진에 노출될 필요가 없으므로 client-side 에서 tanstack-query로 요청 후 캐시를 관리합니다. 그 반대의 경우 server-side에서 fetch 하면 데이터가 원격 서버에 캐싱되고 **Suspense의 fallback** 을 이용하여 유저에게 데이터를 가져오는 중임을 알립니다. 두 가지 방법을 적절히 섞어 사용하면 API 호출 비용을 줄이고, 유저에게 빠르게 데이터를 보여줄 수 있습니다.
+1번 고민에 대한 결과를 정리하면, 개인화 된 요청은 검색 엔진에 노출될 필요가 없으므로 client-side 에서 tanstack-query로 요청 후 캐시를 관리합니다. 그 반대의 경우 server-side에서 fetch 하면 첫번째 요청 시 데이터가 원격 서버에 캐싱되며 **Suspense의 fallback** 을 이용하여 유저에게 데이터를 가져오는 중임을 알립니다. 두 가지 방법을 적절히 섞어 사용하면 API 호출 비용을 줄이고, 유저에게 빠르게 데이터를 보여줄 수 있습니다.
 
 이 때, 2번의 고민이 발생합니다.
 
