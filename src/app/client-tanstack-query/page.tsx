@@ -1,14 +1,27 @@
-import TodoList from "@/components/Todo/TodoList";
 import Link from "next/link";
-import { Suspense } from "react";
+import QueryPhotoList from "@/components/Photo/QueryPhotoList";
+import QueryTodoList from "@/components/Todo/QueryTodoList";
 
-export default async function ClientTanstackQuery() {
+export default function ClientTanstackQueryPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Link href="/client-tanstack-query-2">go to client-tanstack-query-2</Link>
-      <Suspense fallback={"loading!!!"}>
-        <TodoList />
-      </Suspense>
-    </main>
+    <div className="flex flex-col items-center">
+      <p className="text-5xl font-bold mb-4">client-side useQuery</p>
+      <Link href="/" className="text-blue-500 mb-4">
+        go to example list
+      </Link>
+
+      <div className="flex justify-between w-full max-w-screen-xl">
+        <div className="flex flex-row justify-center gap-8 w-full">
+          <div className="flex flex-col w-full max-w-md">
+            <p className="text-2xl font-medium mb-4">Todo List</p>
+            <QueryTodoList />
+          </div>
+          <div className="flex flex-col w-full max-w-md">
+            <p className="text-2xl font-medium mb-4">Photo List</p>
+            <QueryPhotoList />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
