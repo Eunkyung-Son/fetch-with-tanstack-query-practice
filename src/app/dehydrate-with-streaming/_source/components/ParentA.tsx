@@ -1,5 +1,6 @@
+"use server";
 import ParentB from "./ParentB";
 
-export default function ParentA() {
+export default async function ParentA() {
   return <ParentB />;
 }
