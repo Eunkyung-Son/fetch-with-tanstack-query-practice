@@ -9,18 +9,18 @@ export const returnFetchInterceptors: FetchHelper = (args) =>
     ...args,
     interceptors: {
       request: async (args) => {
-        const access = await getCookie("access").then((v) => v?.value);
-        if (access) {
-          const headers = new Headers(args[1]?.headers);
-          headers.set("Authorization", `Bearer ${access}`);
-          return [
-            args[0],
-            {
-              ...args[1],
-              headers,
-            },
-          ];
-        }
+        // const access = await getCookie("access").then((v) => v?.value);
+        // if (access) {
+        //   const headers = new Headers(args[1]?.headers);
+        //   headers.set("Authorization", `Bearer ${access}`);
+        //   return [
+        //     args[0],
+        //     {
+        //       ...args[1],
+        //       headers,
+        //     },
+        //   ];
+        // }
         return args;
       },
       response: async (response, requestArgs, fetch) => {
