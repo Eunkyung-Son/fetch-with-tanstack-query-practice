@@ -19,7 +19,7 @@ export class PhotoPrefetchQuery {
    *
    * @tags photo
    * @name PhotoList
-   * @summary Banner 목록 조회
+   * @summary photo 목록 조회
    * @request GET:/photos
    * @secure
    */
@@ -41,7 +41,7 @@ export class PhotoPrefetchQuery {
    *
    * @tags photo
    * @name PhotoRetrieve
-   * @summary Photo 상세 조회
+   * @summary photo 상세 조회
    * @request GET:/photos/{id}
    * @secure
    */

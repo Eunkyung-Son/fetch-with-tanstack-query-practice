@@ -5,7 +5,6 @@ import {
   RequestFnReturn,
   QueryHookParams,
 } from "../@types/tanstack-query-type";
-import { CommonErrorType } from "../@types/data-contracts";
 import { todoApi } from "./Todo.api";
 
 /**
@@ -30,7 +29,7 @@ export const QUERY_KEY_TODO_API = {
 export const useTodoListQuery = <
   TData = RequestFnReturn<typeof todoApi.todoList>
 >(
-  params?: QueryHookParams<typeof todoApi.todoList, CommonErrorType, TData>
+  params?: QueryHookParams<typeof todoApi.todoList, TData>
 ) => {
   const queryKey = QUERY_KEY_TODO_API.LIST(params?.variables);
   return useQuery({
@@ -52,7 +51,7 @@ export const useTodoListQuery = <
 export const useTodoRetrieveQuery = <
   TData = RequestFnReturn<typeof todoApi.todoRetrieve>
 >(
-  params: QueryHookParams<typeof todoApi.todoRetrieve, CommonErrorType, TData>
+  params: QueryHookParams<typeof todoApi.todoRetrieve, TData>
 ) => {
   const queryKey = QUERY_KEY_TODO_API.RETRIEVE(params.variables);
   return useQuery({

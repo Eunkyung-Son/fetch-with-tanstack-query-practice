@@ -1,6 +1,6 @@
 import { fetchInstance } from "@/configs/fetch/fetch-instance";
 import { HttpClient, RequestParams } from "../@http-client";
-import { CommonErrorType, TodoType } from "../@types/data-contracts";
+import { TodoType } from "../Photo/types/model/todo";
 
 export class TodoApi<
   SecurityDataType = unknown
@@ -10,18 +10,22 @@ export class TodoApi<
    *
    * @tags todos
    * @name TodoType
-   * @summary Banner 목록 조회
+   * @summary todo 목록 조회
    * @request GET:/todos
    * @secure
    */
   todoList = (variables?: { query?: {}; params?: RequestParams }) =>
-    this.request<TodoType[], CommonErrorType>({
+    this.request<TodoType[]>({
       path: `/todos`,
       method: "GET",
       query: variables?.query,
       secure: true,
       format: "json",
       ...variables?.params,
+      next: {
+        tags: ["TODO_LIST"],
+        ...variables?.params?.next,
+      },
     });
 
   /**
@@ -34,7 +38,7 @@ export class TodoApi<
    * @secure
    */
   todoRetrieve = (variables: { id: number; params?: RequestParams }) =>
-    this.request<TodoType, CommonErrorType>({
+    this.request<TodoType>({
       path: `/todos/${variables.id}`,
       method: "GET",
       secure: true,

@@ -5,7 +5,6 @@ import {
   RequestFnReturn,
   QueryHookParams,
 } from "../@types/tanstack-query-type";
-import { CommonErrorType } from "../@types/data-contracts";
 import { photoApi } from "./Photo.api";
 
 /**
@@ -30,12 +29,12 @@ export const QUERY_KEY_PHOTO_API = {
 export const usePhotoListQuery = <
   TData = RequestFnReturn<typeof photoApi.photoList>
 >(
-  params?: QueryHookParams<typeof photoApi.photoList, CommonErrorType, TData>
+  params?: QueryHookParams<typeof photoApi.photoList, TData>
 ) => {
   const queryKey = QUERY_KEY_PHOTO_API.LIST(params?.variables);
   return useQuery({
     queryKey,
-    queryFn: () => photoApi.photoList(params?.variables).then((res) => res),
+    queryFn: () => photoApi.photoList(params?.variables),
     ...params?.options,
   });
 };
@@ -52,7 +51,7 @@ export const usePhotoListQuery = <
 export const useTodosRetrieveQuery = <
   TData = RequestFnReturn<typeof photoApi.photoRetrieve>
 >(
-  params: QueryHookParams<typeof photoApi.photoRetrieve, CommonErrorType, TData>
+  params: QueryHookParams<typeof photoApi.photoRetrieve, TData>
 ) => {
   const queryKey = QUERY_KEY_PHOTO_API.RETRIEVE(params.variables);
   return useQuery({

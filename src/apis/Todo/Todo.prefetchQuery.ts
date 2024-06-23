@@ -10,8 +10,8 @@ import { QUERY_KEY_TODO_API } from "./Todo.query";
 export class TodoPrefetchQuery {
   private queryClient: QueryClient;
 
-  constructor() {
-    this.queryClient = new QueryClient();
+  constructor(queryClient: QueryClient) {
+    this.queryClient = queryClient;
   }
 
   /**
@@ -58,5 +58,3 @@ export class TodoPrefetchQuery {
     });
   };
 }
-
-export const todoPrefetchQuery = new TodoPrefetchQuery();

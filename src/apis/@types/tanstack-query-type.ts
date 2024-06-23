@@ -2,7 +2,6 @@ import {
   UseBaseQueryOptions,
   UseInfiniteQueryOptions,
   UseMutationOptions,
-  UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 
 export type QueryHookParams<
